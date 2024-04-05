@@ -1,0 +1,75 @@
+// left top wide high
+q,0,0,32,32,     // 0 blue cube
+q,64,0,32,32,    // 1 green cube
+q,96,0,32,32,    // 2 yellow cube
+q,32,0,32,32,    // 3 red cube
+q,128,0,16,16,   // 4 orange ball
+q,144,0,16,12,   // 5 orange ball vertical squish
+q,128,16,16,8,   // 6 orange ball vertical squished
+q,184,0,12,16,   // 7 orange ball horizontal squish
+q,176,0,8,16,    // 8 orange ball horizontal squished
+q,160,8,16,16,   // 9 purple ball
+q,144,12,16,12,  // 10 purple ball vertical squish
+q,160,0,16,8,    // 11 purple ball vertical squished
+q,184,16,12,16,  // 12 purple ball horizontal squish
+q,176,16,8,16,   // 13 purple ball horizontal squished
+q,196,0,14,16,   // 14 orange ball 45 squish
+q,210,0,14,14,   // 15 orange ball 45 squished
+q,238,0,14,14,   // 16 orange ball 270 squish
+q,224,0,14,14,   // 17 orange ball 270 squished
+q,196,16,14,16,  // 18 purple ball 45 squish
+q,210,16,14,14,  // 19 purple ball 45 squished
+q,238,16,14,16,  // 20 purple ball 270 squish
+q,224,16,14,14,  // 21 purple ball 270 squished
+q,0,32,32,32,    // 22 blank cube
+q,32,32,44,44,   // 23 halo
+// display alphabet
+// id,left,top,wide,high,kerning,
+a,0,226,11,14,1,   // A 0
+a,11,226,11,14,1,  // B 1
+a,22,226,11,14,1,  // C 2
+a,33,226,12,14,1,  // D 3
+a,45,226,10,14,1,  // E 4
+a,55,226,10,14,1,  // F 5
+a,65,226,11,14,1,  // G 6
+a,76,226,12,14,1,  // H 7 
+a,88,226,3,14,1,   // I 8
+a,91,226,9,14,1,   // J 9
+a,100,226,10,14,1, // K 10
+a,110,226,10,14,1, // L 11
+a,120,226,14,14,1, // M 12
+a,134,226,12,14,1, // N 13
+a,146,226,14,14,1, // O 14
+a,160,226,10,14,1, // P 15
+a,170,226,14,14,1, // Q 16
+a,184,226,10,14,1, // R 17
+a,194,226,10,14,1, // S 18
+a,204,226,11,14,1, // T 19
+a,215,226,12,14,1, // U 20
+a,227,226,12,14,1, // V 21
+a,239,226,16,14,1, // W 22
+a,255,226,11,14,1, // X 23
+a,266,226,10,14,1, // Y 24
+a,276,226,11,14,1, // Z 25
+// display numbers no kerning
+n,0,212,10,14,  // 0
+n,10,212,6,14,  // 1
+n,16,212,10,14, // 2
+n,26,212,10,14, // 3
+n,36,212,10,14, // 4
+n,46,212,11,14, // 5
+n,57,212,10,14, // 6
+n,67,212,8,14,  // 7
+n,75,212,9,14,  // 8
+n,84,212,9,14,  // 9
+n,316,212,4,16, // comma
+// fruit loops
+f,93,212,14,14,  // 0 blue
+f,107,212,14,14, // 1 green
+f,121,212,14,14, // 2 yellow
+f,135,212,14,14, // 3 red
+// selected
+f,149,212,14,14, // 4 blue
+f,163,212,14,14, // 5 green
+f,177,212,14,14, // 6 yellow
+f,191,212,14,14, // 7 red
