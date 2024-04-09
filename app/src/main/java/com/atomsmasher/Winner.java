@@ -394,7 +394,7 @@ public class Winner {
         Paint p = new Paint();
         for (int i = 0; i < star.length; i+=4) {
             star[i] = x;
-            star[i+1] = y;
+            star[i+1] = y + 4;
         }
         flip = !flip;
         p.setStrokeWidth(4);
