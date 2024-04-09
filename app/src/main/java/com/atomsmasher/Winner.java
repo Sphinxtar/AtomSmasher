@@ -4,6 +4,7 @@ import static java.lang.Integer.*;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
@@ -29,18 +30,20 @@ public class Winner {
     public final Rect[] keyboard = new Rect[28];
     public final Rect trashcan = new Rect();
     public final Rect hamburger = new Rect();
-    public final float[] star = new float[216];
+    public final float[] star = new float[456];
     public long wintime = 0;
     public long score = 0;
     public int header; // topten.png header height
     public int center; // center of top ten display
     public int leading; // lines between top ten scores
+    private static boolean flip;
 
     public Winner(Context context, PlayingField pf) {
         loadKeyBoard(context, pf);
         for (int i = 0; i < topten.length; i++)
             topten[i] = new Topten();
         loadTopTen(context);
+        flip = false;
     }
 
     private void loadKeyBoard(Context context, PlayingField pf) {
@@ -181,7 +184,7 @@ public class Winner {
         FileWriter fw;
         BufferedWriter bw;
         try {
-            File file = new File(context.getFilesDir(), "AganTopTen.txt");
+            File file = new File(context.getFilesDir(), "MotasTopTen.txt");
             fw = new FileWriter(file.getAbsolutePath());
             if (file.getFreeSpace() > 1200) {
                 bw = new BufferedWriter(fw);
@@ -221,7 +224,6 @@ public class Winner {
         }
     }
 
-
     public void displayTopten(Canvas canvas, Sprite sprite) {
         // header, center and leading
         int len;
@@ -242,6 +244,13 @@ public class Winner {
             }
         }
     }
+    public void unselectDonuts() {
+        for (Topten score : topten) {
+            if (score.getSelected())
+                score.setSelected(false);
+        }
+    }
+
 
     public int hitDonut(Context context, MotionEvent event) {
         int retval = 3;
@@ -256,6 +265,7 @@ public class Winner {
             saveTopten(context);
         }
         if (hamburger.contains(x,y)) {
+            unselectDonuts();
             retval = 1; // menu
         }
         return retval;
@@ -380,12 +390,24 @@ public class Winner {
         score = stamp - wintime;
     }
 
-    public void drawStar(Canvas canvas, int x, int y, Paint p) {
+    public void drawStar(Canvas canvas, int x, int y) {
+        Paint p = new Paint();
         for (int i = 0; i < star.length; i+=4) {
             star[i] = x;
             star[i+1] = y;
         }
-        canvas.drawLines(star, 0, star.length, p);
+        flip = !flip;
+        p.setStrokeWidth(4);
+        if (flip)
+            p.setColor(Color.WHITE);
+        else
+            p.setColor(Color.CYAN);
+        canvas.drawLines(star, 0, 228, p);
+        if (flip)
+            p.setColor(Color.CYAN);
+        else
+            p.setColor(Color.WHITE);
+        canvas.drawLines(star, 228, 228, p);
     }
 
     private static class
