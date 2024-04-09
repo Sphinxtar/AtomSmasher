@@ -140,8 +140,10 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                         pix.drawCenterSprite(canvas, b.sprite, b.spot.x, b.spot.y);
                     }
                 }
-                if (winner.getWintime() > 0)
+                if (winner.getWintime() > 0) {
+                    winner.drawStar(canvas, player.spot.x, player.spot.y, p);
                     pix.drawCenterSprite(canvas, 23, player.spot.x, player.spot.y);
+                }
                 pix.drawCenterSprite(canvas, player.sprite, player.spot.x, player.spot.y);
                 canvas.restore();
                 player.adjustPlayer(pf);

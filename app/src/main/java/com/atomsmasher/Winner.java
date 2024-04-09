@@ -1,7 +1,10 @@
 package com.atomsmasher;
 
+import static java.lang.Integer.*;
+
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
@@ -26,6 +29,7 @@ public class Winner {
     public final Rect[] keyboard = new Rect[28];
     public final Rect trashcan = new Rect();
     public final Rect hamburger = new Rect();
+    public final float[] star = new float[216];
     public long wintime = 0;
     public long score = 0;
     public int header; // topten.png header height
@@ -44,6 +48,7 @@ public class Winner {
         String[] words;
         int keynum = 0;
         InputStream in;
+        int px = 2; // index into star
         cursor = 0;
         try {
             in = context.getAssets().open("winner");
@@ -66,38 +71,43 @@ public class Winner {
             switch (words[0]) {
                 case "k":
                     keyboard[keynum] = new Rect();
-                    keyboard[keynum].left = pf.getVportLeft() + (Integer.parseInt(words[1]) * pf.scalefactor);
-                    keyboard[keynum].top = pf.getVportTop() + (Integer.parseInt(words[2]) * pf.scalefactor);
-                    keyboard[keynum].right = keyboard[keynum].left + (Integer.parseInt(words[3]) * pf.scalefactor);
-                    keyboard[keynum].bottom = keyboard[keynum].top + (Integer.parseInt(words[4]) * pf.scalefactor);
+                    keyboard[keynum].left = pf.getVportLeft() + (parseInt(words[1]) * pf.scalefactor);
+                    keyboard[keynum].top = pf.getVportTop() + (parseInt(words[2]) * pf.scalefactor);
+                    keyboard[keynum].right = keyboard[keynum].left + (parseInt(words[3]) * pf.scalefactor);
+                    keyboard[keynum].bottom = keyboard[keynum].top + (parseInt(words[4]) * pf.scalefactor);
                     keynum++;
                     break;
 
                 case "e":
-                    edit.left = pf.getVportLeft() + (Integer.parseInt(words[1]) * pf.scalefactor);
-                    edit.top = pf.getVportTop() + (Integer.parseInt(words[2]) * pf.scalefactor);
-                    edit.right = edit.left + (Integer.parseInt(words[3]) * pf.scalefactor);
-                    edit.bottom = edit.top + (Integer.parseInt(words[4]) * pf.scalefactor);
+                    edit.left = pf.getVportLeft() + (parseInt(words[1]) * pf.scalefactor);
+                    edit.top = pf.getVportTop() + (parseInt(words[2]) * pf.scalefactor);
+                    edit.right = edit.left + (parseInt(words[3]) * pf.scalefactor);
+                    edit.bottom = edit.top + (parseInt(words[4]) * pf.scalefactor);
                     break;
 
                 case "h":
-                    header = pf.getVportTop() + (Integer.parseInt(words[1]) * pf.scalefactor);
-                    center = pf.getVportLeft() + (Integer.parseInt(words[2]) * pf.scalefactor);
-                    leading = pf.getVportTop() + (Integer.parseInt(words[3]) * pf.scalefactor);
+                    header = pf.getVportTop() + (parseInt(words[1]) * pf.scalefactor);
+                    center = pf.getVportLeft() + (parseInt(words[2]) * pf.scalefactor);
+                    leading = pf.getVportTop() + (parseInt(words[3]) * pf.scalefactor);
                     break;
 
                 case "m":
-                    hamburger.left = pf.getVportLeft() + (Integer.parseInt(words[1]) * pf.scalefactor);
-                    hamburger.top = pf.getVportTop() + (Integer.parseInt(words[2]) * pf.scalefactor);
-                    hamburger.right = hamburger.left + (Integer.parseInt(words[3]) * pf.scalefactor);
-                    hamburger.bottom = hamburger.top + (Integer.parseInt(words[4]) * pf.scalefactor);
+                    hamburger.left = pf.getVportLeft() + (parseInt(words[1]) * pf.scalefactor);
+                    hamburger.top = pf.getVportTop() + (parseInt(words[2]) * pf.scalefactor);
+                    hamburger.right = hamburger.left + (parseInt(words[3]) * pf.scalefactor);
+                    hamburger.bottom = hamburger.top + (parseInt(words[4]) * pf.scalefactor);
                     break;
 
                 case "t":
-                    trashcan.left = pf.getVportLeft() + (Integer.parseInt(words[1]) * pf.scalefactor);
-                    trashcan.top = pf.getVportTop() + (Integer.parseInt(words[2]) * pf.scalefactor);
-                    trashcan.right = trashcan.left + (Integer.parseInt(words[3]) * pf.scalefactor);
-                    trashcan.bottom = trashcan.top + (Integer.parseInt(words[4]) * pf.scalefactor);
+                    trashcan.left = pf.getVportLeft() + (parseInt(words[1]) * pf.scalefactor);
+                    trashcan.top = pf.getVportTop() + (parseInt(words[2]) * pf.scalefactor);
+                    trashcan.right = trashcan.left + (parseInt(words[3]) * pf.scalefactor);
+                    trashcan.bottom = trashcan.top + (parseInt(words[4]) * pf.scalefactor);
+                    break;
+                case "p":
+                    star[px] = pf.getVportLeft() + parseInt(words[1]) * pf.scalefactor;
+                    star[px + 1] = pf.getVportTop() + parseInt(words[2]) * pf.scalefactor;
+                    px += 4;
                     break;
             }
         }
@@ -115,7 +125,7 @@ public class Winner {
         String[] woids;
         int tencount = 0;
         try {
-            File file = new File(context.getFilesDir(), "AganTopTen.txt");
+            File file = new File(context.getFilesDir(), "MotasTopTen.txt");
             if (file.exists()) {
                 System.err.println("SIZE: " + file.length());
                 try {
@@ -128,7 +138,7 @@ public class Winner {
                         }
                         words = line.split(":");
                         if (words[0].equals("t")) {
-                            topten[tencount].color = Integer.parseInt(words[1]);
+                            topten[tencount].color = parseInt(words[1]);
                             woids = words[2].split(",");
                             for (int i = 0; i < woids.length; i++) {
                                 topten[tencount].name[i] = Short.parseShort(woids[i]);
@@ -368,6 +378,14 @@ public class Winner {
 
     public void setScore(long stamp) {
         score = stamp - wintime;
+    }
+
+    public void drawStar(Canvas canvas, int x, int y, Paint p) {
+        for (int i = 0; i < star.length; i+=4) {
+            star[i] = x;
+            star[i+1] = y;
+        }
+        canvas.drawLines(star, 0, star.length, p);
     }
 
     private static class
