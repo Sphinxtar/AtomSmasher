@@ -34,6 +34,7 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
         racket = new Racket(getCtext());
         thread = new AtomThread(getHolder(), this);
         moodmusic.pausePlaying();
+        racket.play(4);
         setFocusable(true);
     }
 
@@ -94,8 +95,9 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
             performClick();
         } else if (gstate > 3) { // slides
             newstate = slides.hitButton(gstate - 4);
+            if (newstate != gstate)
+                racket.play(slides.slides[gstate - 4].getApresound());
             performClick();
-            racket.play(0);
         }
         if (gstate < 0 ) {
             racket.play(5);

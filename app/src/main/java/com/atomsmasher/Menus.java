@@ -24,6 +24,7 @@ public class Menus {
         buttons[0].bounds.right = (Wide - (Wide / 4)) + Left;
         buttons[0].bounds.bottom = (buttons[0].bounds.top + (High / 16) * 2);
         buttons[0].setGcode(0);
+        buttons[0].setRacket(8);
 
         buttons[1] = new mybutt();
         buttons[1].label = "High Scores";
@@ -34,6 +35,7 @@ public class Menus {
         buttons[1].bounds.right = (Wide - (Wide / 4)) + Left;
         buttons[1].bounds.bottom = (buttons[1].bounds.top + (High / 16) * 2);
         buttons[1].setGcode(3);
+        buttons[0].setRacket(4);
 
         buttons[2] = new mybutt();
         buttons[2].label = "How To Play";
@@ -44,6 +46,7 @@ public class Menus {
         buttons[2].bounds.right = (Wide - (Wide / 4)) + Left;
         buttons[2].bounds.bottom = (buttons[2].bounds.top + (High / 16) * 2);
         buttons[2].setGcode(5);
+        buttons[0].setRacket(4);
 
         buttons[3] = new mybutt();
         buttons[3].label = "Quit";
@@ -54,6 +57,7 @@ public class Menus {
         buttons[3].bounds.right = (Wide - (Wide / 4)) + Left;
         buttons[3].bounds.bottom = (buttons[3].bounds.top + (High / 16) * 2);
         buttons[3].setGcode(7);
+        buttons[0].setRacket(8);
     }
 
     public int hitButton(MotionEvent event, Racket racket) {
@@ -62,7 +66,7 @@ public class Menus {
         int y = (int) event.getY();
         for (mybutt button : buttons) {
             if (button.bounds.contains(x, y)) {
-                racket.play(8);
+                racket.play(button.getRacket());
                 retval = button.getGcode();
             }
         }
@@ -110,12 +114,18 @@ public class Menus {
     private static class mybutt {
         Rect bounds;
         String label;
+        private  int racket;
         private int gcode;
 
+        public int getRacket() {
+            return racket;
+        }
+        public void setRacket(int racket) {
+            this.racket = racket;
+        }
         public void setGcode(int gcode) {
             this.gcode = gcode;
         }
-
         public int getGcode() {
             return this.gcode;
         }

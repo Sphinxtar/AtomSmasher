@@ -25,7 +25,7 @@ public class AtomThread extends Thread {
         long waitTime;
         // long totalTime = 0;
         int frameCount =0;
-        int targetFPS = 24;
+        int targetFPS = 18;
         long targetTime = 1000 / targetFPS;
 
         while(running) {
