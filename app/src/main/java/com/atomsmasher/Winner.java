@@ -130,7 +130,7 @@ public class Winner {
         try {
             File file = new File(context.getFilesDir(), "MotasTopTen.txt");
             if (file.exists()) {
-                System.err.println("SIZE: " + file.length());
+                // System.err.println("SIZE: " + file.length());
                 try {
                     fr = new FileReader(file);
                     br = new BufferedReader(fr);
@@ -252,31 +252,36 @@ public class Winner {
     }
 
 
-    public int hitDonut(Context context, MotionEvent event) {
+    public int hitDonut(Context context, MotionEvent event, Racket racket) {
         int retval = 3;
         int x = (int) event.getX();
         int y = (int) event.getY();
         for (Topten value : topten) {
-            if (value.fruit.contains(x, y))
+            if (value.fruit.contains(x, y)) {
                 value.setSelected(!value.getSelected());
+                racket.play(3);
+            }
         }
         if (trashcan.contains(x, y)) {
             rollUp();
             saveTopten(context);
+            racket.play(0);
         }
         if (hamburger.contains(x,y)) {
             unselectDonuts();
+            racket.play(0);
             retval = 1; // menu
         }
         return retval;
     }
 
-    public int hitButton(Context context, int color, @NonNull MotionEvent event) {
+    public int hitButton(Context context, int color, @NonNull MotionEvent event, Racket racket) {
         int retval = 2;
         int x = (int) event.getX();
         int y = (int) event.getY();
         for (short i = 0; i < keyboard.length; i++) {
             if (keyboard[i].contains(x, y)) {
+                racket.play(3);
                 if (cursor < bigwinner.length && i < 26) {
                     bigwinner[cursor] = (short) (i + 1);
                     ++cursor;
@@ -284,6 +289,7 @@ public class Winner {
                 }
                 if (i == 26) {
                     if (cursor > 0) {
+                        racket.play(3);
                         --cursor;
                         bigwinner[cursor] = 0;
                         break;
@@ -292,7 +298,8 @@ public class Winner {
                 if (i == 27) { // DONE
                     orderedInsert(color, score);
                     saveTopten(context);
-                    retval = 1; // menu
+                    retval = 3; // top ten
+                    racket.play(0);
                     break;
                 }
             }

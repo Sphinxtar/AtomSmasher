@@ -77,30 +77,28 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                 player.setSprite(22);
             }
         } else if (gstate == 1) { // menu 1
-            newstate = menu.hitButton(event);
+            newstate = menu.hitButton(event, racket);
             if (newstate == 0) // the game
                 player.resetSpot();
             performClick();
-            racket.play(6);
         } else if (gstate == 2) { // top name entry
-            newstate = winner.hitButton(getContext(), player.getSprite(), event);
+            newstate = winner.hitButton(getContext(), player.getSprite(), event, racket);
             performClick();
-            racket.play(7);
-            if(newstate == 1) {
+            if(newstate == 3) {
                 npc.resetBots(player.getSprite());
                 player.setSprite(22);
                 player.resetSpot();
             }
         } else if (gstate == 3) { // high scores
-            newstate = winner.hitDonut(getContext(), event);
+            newstate = winner.hitDonut(getContext(), event, racket);
             performClick();
-            racket.play(7);
         } else if (gstate > 3) { // slides
             newstate = slides.hitButton(gstate - 4);
             performClick();
-            racket.play(5);
+            racket.play(0);
         }
         if (gstate < 0 ) {
+            racket.play(5);
             thread.setRunning(false);
             System.exit(0);
         } else {
@@ -135,7 +133,7 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                 if(player.getSprite() < 4) {
                     p.setColor(Color.WHITE);
                     p.setStrokeWidth(4);
-                    npc.connectOrange(canvas, player, p);
+                    npc.connectOrange(canvas, p);
                     for (Npc.Bot b : npc.bots) {
                         pix.drawCenterSprite(canvas, b.sprite, b.spot.x, b.spot.y);
                     }
@@ -148,7 +146,7 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                 canvas.restore();
                 player.adjustPlayer(pf);
                 if(player.getSprite() < 4)
-                    npc.collisions(pf, player.getHotz());
+                    npc.collisions(pf, player.getHotz(), racket);
             } else if (gstate == 1) { // main menu
                 slides.drawSlide(canvas, 4, pf.getVportLeft(), pf.getVportTop());
                 menu.draw(canvas);

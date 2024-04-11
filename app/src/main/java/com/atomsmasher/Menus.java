@@ -56,15 +56,17 @@ public class Menus {
         buttons[3].setGcode(7);
     }
 
-    public int hitButton(MotionEvent event) {
+    public int hitButton(MotionEvent event, Racket racket) {
+        int retval = 1;
         int x = (int) event.getX();
         int y = (int) event.getY();
         for (mybutt button : buttons) {
             if (button.bounds.contains(x, y)) {
-                return (button.getGcode());
+                racket.play(8);
+                retval = button.getGcode();
             }
         }
-        return(1);
+        return(retval);
     }
 
     public void draw(Canvas canvas){

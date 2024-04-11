@@ -8,8 +8,8 @@
 // sprite is current animation frame reference in the bitmap array
 // sounds values are indexes into the virtual harmonica - interval is pause between repeat
 // example:
-// n :type:state:x,y  :rection:speed:tts:respawn:sprite :birthsound:lifesound,interval:deathrattle:
-// n :0   :0    :40,40:0      :2     :60  :1000   :4    :0         :0,20              :0          :
+// n :type:state:x,y  :rection:speed:tts:respawn:sprite :
+// n :0   :0    :40,40:0      :2     :60  :1000   :4    :
 // four balls of type 0, direction 0 will be filled by random
 n:0:0:40,40:0:2:60:1000:4:0:2,20:1:
 n:0:0:280,40:0:2:60:1000:4:0:2,20:1:

@@ -22,8 +22,8 @@ public class Npc {
         loadBots(context, pf);
     }
     private void loadBots(Context context, PlayingField pf) {
-        // n :type:state:x,y  :rection:speed:tts:respawn:sprite :birthsound:lifesound,interval:deathrattle:
-        // n:0:0:40,40:0:2:60:1000:4:0:0,20:0:
+        // n :type:state:x,y  :rection:speed:tts:respawn:sprite:
+        // n:0:0:40,40:0:2:60:1000:4:
         String line;
         String[] words;
         String[] woids;
@@ -47,8 +47,6 @@ public class Npc {
             if (line.isEmpty()) {
                 continue;
             }
-            // n :type :state :x,y   :rection:speed :tts :sprite :respawn :birthsound:lifesound,interval:deathrattle:
-            // n:type:state:x,y  :rection:tts:respawn:sprite:birthsound:lifesound,interval:deathrattle:
             words = line.split(":");
             if (words[0]. equals("n")) {
                 bots[botnum] = new Bot();
@@ -71,11 +69,6 @@ public class Npc {
                 bots[botnum].setTts(Integer.parseInt(words[6]));
                 bots[botnum].setRespawn(Integer.parseInt(words[7]));
                 bots[botnum].setSprite(Integer.parseInt(words[8]));
-                bots[botnum].setBirthsound(Integer.parseInt(words[9]));
-                woids = words[10].split(",");
-                bots[botnum].setLifesound(Integer.parseInt(woids[0]));
-                bots[botnum].setInterval(Integer.parseInt(woids[1]));
-                bots[botnum].setDeathrattle(Integer.parseInt(words[11]));
                 botnum++;
             }
             if (words[0]. equals("z")) {
@@ -98,7 +91,7 @@ public class Npc {
         }
     }
 
-    public void collisions(PlayingField pf, Rect[] hotzones) {
+    public void collisions(PlayingField pf, Rect[] hotzones, Racket racket) {
         int zonenum = 0;
         int r;
         for (Zone z : zones) {
@@ -132,6 +125,7 @@ public class Npc {
                                         throw new IllegalStateException("Unexpected value: " + b.getRection());
                                 }
                             case 1:
+                                racket.play(7);
                                 switch (b.getRection()) {
                                     case 1:
                                     case 9:                     // orange : purple
@@ -157,8 +151,11 @@ public class Npc {
                                     b.setRection(Dragon.getRandom(1, 4));
                                 else
                                     b.setRection(Dragon.getRandom(6, 9));
-                                b.setState(1);
-                                b.setRespawn(900);
+                                if (b.getState() == 0) {
+                                    b.setState(1);
+                                    b.setRespawn(900);
+                                    racket.play(6);
+                                }
                             default:
                                 break;
                         }
@@ -261,7 +258,7 @@ public class Npc {
             bots[i].setRespawn(1000 - (250 * level));
         }
     }
-    public void connectOrange(Canvas canvas, Player player, Paint p) {
+    public void connectOrange(Canvas canvas, Paint p) {
         float[] bones = new float[16];
         int lines = 0;
         for (Bot b : bots) {
@@ -297,10 +294,6 @@ public class Npc {
         int tts; // time til spin - at 0 reset to a random amount and changes direction/speed
         int respawn;
         int sprite;
-        int birthsound;
-        int lifesound;
-        int interval;
-        int deathrattle;
 
 //        public int getRespawn() { return respawn; }
         public void setRespawn(int respawn) { this.respawn = respawn; }
@@ -309,14 +302,6 @@ public class Npc {
 //        public int getTts() { return tts; }
         public void setTts(int tts) { this.tts = tts; }
 //        public int getBirthsound() { return birthsound; }
-        public void setBirthsound(int birthsound) { this.birthsound = birthsound; }
-//        public int getLifesound() { return lifesound; }
-        public void setLifesound(int lifesound) { this.lifesound = lifesound; }
-//        public int getInterval() { return interval; }
-        public void setInterval(int interval) { this.interval = interval; }
-//        public int getDeathrattle() { return deathrattle; }
-        public void setDeathrattle(int deathrattle) { this.deathrattle = deathrattle; }
-//        public int getSprite() { return sprite; }
         public void setSprite(int sprite) { this.sprite = sprite; }
         public int getRection() { return rection; }
         public void setRection(int rection) { this.rection = rection; }
