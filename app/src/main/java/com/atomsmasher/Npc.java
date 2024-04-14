@@ -91,7 +91,7 @@ public class Npc {
         }
     }
 
-    public void collisions(PlayingField pf, Rect[] hotzones, Racket racket) {
+    public void collisions(PlayingField pf, Rect[] hotzones, Racket racket, int level) {
         int zonenum = 0;
         int r;
         for (Zone z : zones) {
@@ -125,7 +125,7 @@ public class Npc {
                                         throw new IllegalStateException("Unexpected value: " + b.getRection());
                                 }
                             case 1:
-                                racket.play(7);
+                                racket.play(1);
                                 switch (b.getRection()) {
                                     case 1:
                                     case 9:                     // orange : purple
@@ -153,8 +153,8 @@ public class Npc {
                                     b.setRection(Dragon.getRandom(6, 9));
                                 if (b.getState() == 0) {
                                     b.setState(1);
-                                    b.setRespawn(900);
-                                    racket.play(6);
+                                    b.setRespawn(1000 - (250 * level));
+                                    racket.play(1);
                                 }
                             default:
                                 break;
@@ -251,11 +251,12 @@ public class Npc {
         }
     }
 
-    public void resetBots(int level) {
+    public void resetBots(int level, Racket racket) {
         for (int i = 0; i < bots.length; i++) {
             bots[i].setSpot(spots[i].x, spots[i].y);
             bots[i].setState(0);
             bots[i].setRespawn(1000 - (250 * level));
+            racket.play(4);
         }
     }
     public void connectOrange(Canvas canvas, Paint p) {

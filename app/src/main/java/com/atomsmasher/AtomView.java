@@ -34,7 +34,6 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
         racket = new Racket(getCtext());
         thread = new AtomThread(getHolder(), this);
         moodmusic.pausePlaying();
-        racket.play(4);
         setFocusable(true);
     }
 
@@ -52,29 +51,29 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
             if (button > 0 && button < 10) { // dpad hit
                 player.setDirection(button);
                 if (button == 5)
-                    player.setSpeed(player.getSpeed() - 1); // deceleration
+                    player.setSpeed(player.getSpeed() - 2); // deceleration
                 else
-                    player.setSpeed(6 * pf.getScaleFactor());
+                    player.setSpeed(8 * pf.getScaleFactor());
             }
             else if (button == 10) {  // BLUE
                 player.setSprite(0);
                 player.resetSpot();
-                npc.resetBots(0);
+                npc.resetBots(0, racket);
             } else if (button == 11) { // GREEN
                 player.resetSpot();
                 player.setSprite(1);
-                npc.resetBots(1);
+                npc.resetBots(1, racket);
             } else if (button == 13) { // YELLOW
                 player.resetSpot();
                 player.setSprite(2);
-                npc.resetBots(2);
+                npc.resetBots(2, racket);
             } else if (button == 12) { // RED
                 player.setSprite(3);
                 player.resetSpot();
-                npc.resetBots(3);
+                npc.resetBots(3, racket);
             } else if (button == 14) {
                 newstate = 1; // back to menu 1
-                npc.resetBots(player.getSprite());
+                npc.resetBots(player.getSprite(), racket);
                 player.setSprite(22);
             }
         } else if (gstate == 1) { // menu 1
@@ -86,7 +85,7 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
             newstate = winner.hitButton(getContext(), player.getSprite(), event, racket);
             performClick();
             if(newstate == 3) {
-                npc.resetBots(player.getSprite());
+                npc.resetBots(player.getSprite(), racket);
                 player.setSprite(22);
                 player.resetSpot();
             }
@@ -100,7 +99,7 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
             performClick();
         }
         if (gstate < 0 ) {
-            racket.play(5);
+            racket.play(0);
             thread.setRunning(false);
             System.exit(0);
         } else {
@@ -123,6 +122,7 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                 winner = new Winner(getCtext(), pf);
                 player = new Player(pf);
                 npc = new Npc(getCtext(), pf);
+                racket.play(3);
             }
             if (gstate == 0) { // PLAY THE GAME
                 p.setColor(Color.LTGRAY);
@@ -148,7 +148,7 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                 canvas.restore();
                 player.adjustPlayer(pf);
                 if(player.getSprite() < 4)
-                    npc.collisions(pf, player.getHotz(), racket);
+                    npc.collisions(pf, player.getHotz(), racket, player.getSprite());
             } else if (gstate == 1) { // main menu
                 slides.drawSlide(canvas, 4, pf.getVportLeft(), pf.getVportTop());
                 menu.draw(canvas);
@@ -202,13 +202,13 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
             stamp = winner.getWintime();
             if ((stamp == 0) && (purple == npc.bots.length)) { // all purple start clock
                 winner.setWintime(startTime);
-                racket.play(0);
+                racket.play(3);
             }
             if ((stamp > 0) && (purple < npc.bots.length)) { // clock running and somebody turned orange
                 winner.setScore(startTime);
                 winner.setWintime(0); // reset clock
                 if (winner.checkScore(player.getSprite())) { // top ten qualified
-                    npc.resetBots(player.getSprite());
+                    npc.resetBots(player.getSprite(), racket);
                     gstate = 2; // get a name
                 }
             }

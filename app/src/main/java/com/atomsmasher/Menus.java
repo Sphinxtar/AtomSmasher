@@ -24,7 +24,7 @@ public class Menus {
         buttons[0].bounds.right = (Wide - (Wide / 4)) + Left;
         buttons[0].bounds.bottom = (buttons[0].bounds.top + (High / 16) * 2);
         buttons[0].setGcode(0);
-        buttons[0].setRacket(8);
+        buttons[0].setRacket(4);
 
         buttons[1] = new mybutt();
         buttons[1].label = "High Scores";
@@ -57,7 +57,7 @@ public class Menus {
         buttons[3].bounds.right = (Wide - (Wide / 4)) + Left;
         buttons[3].bounds.bottom = (buttons[3].bounds.top + (High / 16) * 2);
         buttons[3].setGcode(7);
-        buttons[0].setRacket(8);
+        buttons[0].setRacket(4);
     }
 
     public int hitButton(MotionEvent event, Racket racket) {

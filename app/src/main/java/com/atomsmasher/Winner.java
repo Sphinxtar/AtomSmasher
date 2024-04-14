@@ -167,13 +167,16 @@ public class Winner {
                     e.printStackTrace(System.err);
                 }
             } else {
-                bigwinner[0] = 14; // N
-                bigwinner[1] = 15; // O
-                bigwinner[2] = 2;  // B
-                bigwinner[3] = 15; // O
-                bigwinner[4] = 4;  // D
-                bigwinner[5] = 25; // Y
-                cursor = 6;
+                bigwinner[0] = 0;  // A
+                bigwinner[1] = 3;  // D
+                bigwinner[2] = 0;  // A
+                bigwinner[3] = 12; // M
+                bigwinner[4] = 18; // S
+                bigwinner[5] = 12; // M
+                bigwinner[6] = 0;  // A
+                bigwinner[7] = 18; // S
+                bigwinner[8] = 7;  // H
+                cursor = 8;
             }
         } catch (IOException e) {
             e.printStackTrace(System.err);
@@ -259,13 +262,13 @@ public class Winner {
         for (Topten value : topten) {
             if (value.fruit.contains(x, y)) {
                 value.setSelected(!value.getSelected());
-                racket.play(3);
+                racket.play(2);
             }
         }
         if (trashcan.contains(x, y)) {
             rollUp();
             saveTopten(context);
-            racket.play(0);
+            racket.play(3);
         }
         if (hamburger.contains(x,y)) {
             unselectDonuts();
@@ -281,7 +284,7 @@ public class Winner {
         int y = (int) event.getY();
         for (short i = 0; i < keyboard.length; i++) {
             if (keyboard[i].contains(x, y)) {
-                racket.play(3);
+                racket.play(2);
                 if (cursor < bigwinner.length && i < 26) {
                     bigwinner[cursor] = (short) (i + 1);
                     ++cursor;
@@ -289,7 +292,7 @@ public class Winner {
                 }
                 if (i == 26) {
                     if (cursor > 0) {
-                        racket.play(3);
+                        racket.play(2);
                         --cursor;
                         bigwinner[cursor] = 0;
                         break;

@@ -22,7 +22,7 @@ public class Slides {
         slides[0].bm = createScaledBitmap(im, Wide, High,true);
         slides[0].bm.setDensity(Bitmap.DENSITY_NONE);
         slides[0].setGcode(1); // take you to first menu
-        slides[0].setForesound(8);
+        slides[0].setForesound(4);
         slides[0].setApresound(0);
 
         im = decodeResource(context.getResources(), R.drawable.help, options);
@@ -47,7 +47,7 @@ public class Slides {
         slides[3].bm.setDensity(Bitmap.DENSITY_NONE);
         slides[3].setGcode(-1);
         slides[3].setForesound(4);
-        slides[3].setApresound(5);
+        slides[3].setApresound(0);
 
         im = decodeResource(context.getResources(), R.drawable.menu, options);
         slides[4] = new slide();
@@ -74,7 +74,7 @@ public class Slides {
         canvas.drawBitmap(slides[slidenum].bm, left, top, null);
     }
 
-    public class slide {
+    public static class slide {
         Bitmap bm;
         int gcode;
         int foresound;
