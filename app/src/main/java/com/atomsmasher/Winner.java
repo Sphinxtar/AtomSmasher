@@ -167,16 +167,16 @@ public class Winner {
                     e.printStackTrace(System.err);
                 }
             } else {
-                bigwinner[0] = 0;  // A
-                bigwinner[1] = 3;  // D
-                bigwinner[2] = 0;  // A
-                bigwinner[3] = 12; // M
-                bigwinner[4] = 18; // S
-                bigwinner[5] = 12; // M
-                bigwinner[6] = 0;  // A
-                bigwinner[7] = 18; // S
-                bigwinner[8] = 7;  // H
-                cursor = 8;
+                bigwinner[0] = 1;  // A
+                bigwinner[1] = 4;  // D
+                bigwinner[2] = 1;  // A
+                bigwinner[3] = 13; // M
+                bigwinner[4] = 19; // S
+                bigwinner[5] = 13; // M
+                bigwinner[6] = 1;  // A
+                bigwinner[7] = 19; // S
+                bigwinner[8] = 8;  // H
+                cursor = 9;
             }
         } catch (IOException e) {
             e.printStackTrace(System.err);
@@ -200,22 +200,23 @@ public class Winner {
                         bigwinner[6] + "," +
                         bigwinner[7] + "," +
                         bigwinner[8] + "," +
-                        bigwinner[9] + ":"); // w:1,2,3,4,5,6,7,8,9,10:
+                        bigwinner[9] + "," +
+                        bigwinner[10] + ":"); // w:1,2,3,4,5,6,7,8,9,10:
                 bw.newLine();
-                for (Topten value : topten) {
-                    bw.write("t:" + value.color + ":" +
-                            value.name[0] + "," +
-                            value.name[1] + "," +
-                            value.name[2] + "," +
-                            value.name[3] + "," +
-                            value.name[4] + "," +
-                            value.name[5] + "," +
-                            value.name[6] + "," +
-                            value.name[7] + "," +
-                            value.name[8] + "," +
-                            value.name[9] + "," +
-                            value.name[10] + ":" +
-                            value.score + ":"); // t:0:1,2,3,4,5,6,7,8,9,10:2134567:
+                for (Topten t : topten) {
+                    bw.write("t:" + t.color + ":" +
+                            t.name[0] + "," +
+                            t.name[1] + "," +
+                            t.name[2] + "," +
+                            t.name[3] + "," +
+                            t.name[4] + "," +
+                            t.name[5] + "," +
+                            t.name[6] + "," +
+                            t.name[7] + "," +
+                            t.name[8] + "," +
+                            t.name[9] + "," +
+                            t.name[10] + ":" +
+                            t.score + ":"); // t:0:1,2,3,4,5,6,7,8,9,10:2134567:
                     bw.newLine();
                 }
                 bw.flush();

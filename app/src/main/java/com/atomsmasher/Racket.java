@@ -26,11 +26,12 @@ public class Racket {
 		Sound[4] = SndPool.load(context, R.raw.zzrrrz, 1);
 	}
 
-	// play( sound number )
 	public void play( int noise ) {
-		SndPool.play(Sound[noise], (float) 0.5, (float) 0.5, 0, 0, 1);
+		SndPool.play(Sound[noise], (float) 0.5, (float) 0.5, 5, 0, 1);
 	}
-
+	public void playBounce() {
+		SndPool.play(Sound[1], (float) 0.5, (float) 0.5, 0, 0, 1);
+	}
 	protected void onDestroy() {
 		SndPool.release();
 		SndPool = null;

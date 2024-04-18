@@ -125,7 +125,7 @@ public class Npc {
                                         throw new IllegalStateException("Unexpected value: " + b.getRection());
                                 }
                             case 1:
-                                racket.play(1);
+                                racket.playBounce();
                                 switch (b.getRection()) {
                                     case 1:
                                     case 9:                     // orange : purple
@@ -154,7 +154,7 @@ public class Npc {
                                 if (b.getState() == 0) {
                                     b.setState(1);
                                     b.setRespawn(1000 - (250 * level));
-                                    racket.play(1);
+                                    racket.playBounce();
                                 }
                             default:
                                 break;
