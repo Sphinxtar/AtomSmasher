@@ -84,7 +84,7 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
         } else if (gstate == 2) { // top name entry
             newstate = winner.hitButton(getContext(), player.getSprite(), event, racket);
             performClick();
-            if(newstate == 3) {
+            if (newstate == 3) {
                 npc.resetBots(player.getSprite(), racket);
                 player.setSprite(22);
                 player.resetSpot();
@@ -141,7 +141,7 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                     }
                 }
                 if (winner.getWintime() > 0) {
-                    winner.drawStar(canvas, player.spot.x, player.spot.y);
+                    winner.drawStar(canvas, player.spot.x, player.spot.y, player.getSprite());
                     pix.drawCenterSprite(canvas, 23, player.spot.x, player.spot.y);
                 }
                 pix.drawCenterSprite(canvas, player.sprite, player.spot.x, player.spot.y);

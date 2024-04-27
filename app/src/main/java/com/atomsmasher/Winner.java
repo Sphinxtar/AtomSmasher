@@ -401,8 +401,25 @@ public class Winner {
         score = stamp - wintime;
     }
 
-    public void drawStar(Canvas canvas, int x, int y) {
+    public void drawStar(Canvas canvas, int x, int y, int color) {
         Paint p = new Paint();
+        int other = 0;
+        switch(color){
+            case 0:
+                other = Color.BLUE;
+                break;
+            case 1:
+                other = Color.GREEN;
+                break;
+            case 2:
+                other = Color.YELLOW;
+                break;
+            case 3:
+                other = Color.RED;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + color);
+        }
         for (int i = 0; i < star.length; i+=4) {
             star[i] = x;
             star[i+1] = y + 4;
@@ -412,10 +429,10 @@ public class Winner {
         if (flip)
             p.setColor(Color.WHITE);
         else
-            p.setColor(Color.CYAN);
+            p.setColor(other);
         canvas.drawLines(star, 0, 228, p);
         if (flip)
-            p.setColor(Color.CYAN);
+            p.setColor(other);
         else
             p.setColor(Color.WHITE);
         canvas.drawLines(star, 228, 228, p);
