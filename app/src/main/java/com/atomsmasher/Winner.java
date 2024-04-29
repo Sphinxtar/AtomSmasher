@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -23,6 +24,8 @@ import java.io.FileNotFoundException;
 
 // top ten list
 public class Winner {
+    private static final String TAG = AtomView.class.getSimpleName();
+
     public final Rect edit = new Rect();
     private static final short[] bigwinner = new short[11];
     private static final Topten[] topten = new Topten[10];
@@ -312,7 +315,14 @@ public class Winner {
     }
 
     public boolean checkScore(int color) { // better than the worst
-        return (color > topten[9].color) || ((color == topten[9].color) && (score > topten[9].score));
+        boolean retval = false;
+        if (color > topten[9].color)
+            retval = true;
+        else if ((topten[9].color == color) && (topten[9].score <= score)) {
+            retval = true;
+        }
+        Log.d(TAG, "color: " + color + " ttcolor: " + topten[9].color + " tts: " + topten[9].score + " score: " + score + " retval: " + retval);
+        return(retval);
     }
 
     public void orderedInsert(int color, long highscore) {
@@ -403,7 +413,7 @@ public class Winner {
 
     public void drawStar(Canvas canvas, int x, int y, int color) {
         Paint p = new Paint();
-        int other = 0;
+        int other;
         switch(color){
             case 0:
                 other = Color.BLUE;

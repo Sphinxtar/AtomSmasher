@@ -23,6 +23,10 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
     public Npc npc;
     public Winner winner;
     public int gstate = 4; // splash
+    boolean ffe = false; // fire for effect
+    boolean youwon = false; // get name or keep going
+
+    public int counter = 0; // frames to ffe
     private Context ctext;
 
     public AtomView(Context context) {
@@ -56,24 +60,29 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                     player.setSpeed(8 * pf.getScaleFactor());
             }
             else if (button == 10) {  // BLUE
+                player.setLevel(0);
                 player.setSprite(0);
                 player.resetSpot();
                 npc.resetBots(0, racket);
             } else if (button == 11) { // GREEN
+                player.setLevel(1);
                 player.resetSpot();
                 player.setSprite(1);
                 npc.resetBots(1, racket);
             } else if (button == 13) { // YELLOW
+                player.setLevel(2);
                 player.resetSpot();
                 player.setSprite(2);
                 npc.resetBots(2, racket);
             } else if (button == 12) { // RED
+                player.setLevel(3);
                 player.setSprite(3);
                 player.resetSpot();
                 npc.resetBots(3, racket);
             } else if (button == 14) {
+                player.setLevel(-1);
                 newstate = 1; // back to menu 1
-                npc.resetBots(player.getSprite(), racket);
+                npc.resetBots(player.getLevel(), racket);
                 player.setSprite(22);
             }
         } else if (gstate == 1) { // menu 1
@@ -82,10 +91,12 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                 player.resetSpot();
             performClick();
         } else if (gstate == 2) { // top name entry
-            newstate = winner.hitButton(getContext(), player.getSprite(), event, racket);
+            newstate = winner.hitButton(getContext(), player.getLevel(), event, racket);
             performClick();
             if (newstate == 3) {
-                npc.resetBots(player.getSprite(), racket);
+                youwon = false;
+                player.setLevel(-1);
+                npc.resetBots(player.getLevel(), racket);
                 player.setSprite(22);
                 player.resetSpot();
             }
@@ -132,7 +143,7 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                 dpad.draw(canvas);
                 canvas.save();
                 canvas.clipRect(pf.getVportLeft(), pf.getVportTop(), pf.getVportRight(), pf.getVportBottom());
-                if(player.getSprite() < 4) {
+                if(player.getLevel() >= 0) {
                     p.setColor(Color.WHITE);
                     p.setStrokeWidth(4);
                     npc.connectOrange(canvas, p);
@@ -140,15 +151,18 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                         pix.drawCenterSprite(canvas, b.sprite, b.spot.x, b.spot.y);
                     }
                 }
-                if (winner.getWintime() > 0) {
-                    winner.drawStar(canvas, player.spot.x, player.spot.y, player.getSprite());
-                    pix.drawCenterSprite(canvas, 23, player.spot.x, player.spot.y);
+                if (ffe) {
+                    winner.drawStar(canvas, player.spot.x, player.spot.y, player.getLevel());
+                    pix.drawCenterSprite(canvas, 23, player.spot.x, player.spot.y); // halo
                 }
-                pix.drawCenterSprite(canvas, player.sprite, player.spot.x, player.spot.y);
+                if (player.isSpin()) {
+                    pix.drawCenterSprite(canvas, 44, player.spot.x, player.spot.y); // halo too
+                }
+                pix.drawCenterSprite(canvas, player.getSprite(), player.spot.x, player.spot.y);
                 canvas.restore();
                 player.adjustPlayer(pf);
-                if(player.getSprite() < 4)
-                    npc.collisions(pf, player.getHotz(), racket, player.getSprite());
+                if (player.getLevel() >= 0)
+                    npc.collisions(pf, player.getHotz(), racket, player);
             } else if (gstate == 1) { // main menu
                 slides.drawSlide(canvas, 4, pf.getVportLeft(), pf.getVportTop());
                 menu.draw(canvas);
@@ -192,23 +206,35 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
     // Check for winner
     public void update(long startTime) {
         int purple;
-        long stamp;
         if (npc != null) {
             purple = 0;
             for (int i = 0; i < npc.bots.length; i++) {
                 if (npc.bots[i].getState() == 1)
                     purple++;
             }
-            stamp = winner.getWintime();
-            if ((stamp == 0) && (purple == npc.bots.length)) { // all purple start clock
+            if ((winner.getWintime() == 0) && (purple == npc.bots.length)) { // all purple start clock
                 winner.setWintime(startTime);
                 racket.play(3);
+                ffe = true;
+                counter = 90;
             }
-            if ((stamp > 0) && (purple < npc.bots.length)) { // clock running and somebody turned orange
+            if ((winner.getWintime() > 0) && (purple < npc.bots.length)) { // clock running and somebody turned orange
                 winner.setScore(startTime);
-                winner.setWintime(0); // reset clock
-                if (winner.checkScore(player.getSprite())) { // top ten qualified
-                    npc.resetBots(player.getSprite(), racket);
+                youwon = winner.checkScore(player.getLevel());
+                if (youwon) { // top ten qualified
+                    ffe = true;
+                    winner.setWintime(0); // reset clock
+                }
+                counter = 18;
+            }
+            if (counter > 0)
+                counter--;
+            if (ffe && (counter == 0)) {
+                ffe = false;
+                if (youwon) {
+                    npc.resetBots(player.getLevel(), racket);
+                    youwon = false;
+                    player.setSpin(false);
                     gstate = 2; // get a name
                 }
             }
