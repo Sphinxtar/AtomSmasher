@@ -6,7 +6,7 @@ import android.media.SoundPool;
 
 public class Racket {
 	private static SoundPool SndPool;
-	private static final int Soundnum = 6;
+	private static final int Soundnum = 7;
 	private static final int[] Sound = new int[Soundnum];
 
 	public Racket(Context context) {
@@ -25,6 +25,7 @@ public class Racket {
 		Sound[3] = SndPool.load(context, R.raw.woot, 1);
 		Sound[4] = SndPool.load(context, R.raw.zzrrrz, 1);
 		Sound[5] = SndPool.load(context, R.raw.slurp, 1);
+		Sound[6] = SndPool.load(context, R.raw.hum, 1);
 	}
 
 	public void play( int noise ) {

@@ -98,8 +98,11 @@ public class Npc {
             for (Bot b : bots) {
                 if (b.getState() == 1 && b.respawn > 0)
                     b.respawn--;
-                if (b.respawn <= 0)
+                if (b.respawn == 0) {
+                    b.respawn = -1;
                     b.setState(0);
+                    racket.play(6);
+                }
                 for (int i=0; i < 3; i++) { // player collision
                     if (hotzones[i].contains(b.getSpot().x, b.getSpot().y)) {
                         switch (i) {
@@ -153,7 +156,7 @@ public class Npc {
                                     b.setRection(Dragon.getRandom(6, 9));
                                 if (b.getState() == 0) {
                                     b.setState(1);
-                                    b.setRespawn(2000 - (500 * player.getLevel()));
+                                    b.setRespawn(1000 - (250 * player.getLevel()));
                                     player.setSpin(true);
                                     racket.play(5);
                                 }
