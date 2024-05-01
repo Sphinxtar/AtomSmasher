@@ -167,12 +167,15 @@ public class Npc {
                     b.setSprite(z.sprite[b.state]);
                     switch (zonenum) {
                         case 5: // left vertical
+                            racket.playBounce();
                             b.setRection(Dragon.getRandom(1, 3) * 3);
                             break;
                         case 6: // top horizontal
+                            racket.playBounce();
                             b.setRection(Dragon.getRandom(7, 9));
                             break;
                         case 7: // right vertical
+                            racket.playBounce();
                             r = Dragon.getRandom(1, 3);
                             if (r == 1)
                                 b.setRection(1);
@@ -182,6 +185,7 @@ public class Npc {
                                 b.setRection(7);
                             break;
                         case 8: // bottom horizontal
+                            racket.playBounce();
                             b.setRection(Dragon.getRandom(1, 3));
                             break;
                         case 13: // top left corner

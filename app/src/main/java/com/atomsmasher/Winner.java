@@ -94,7 +94,7 @@ public class Winner {
                 case "h":
                     header = pf.getVportTop() + (parseInt(words[1]) * pf.scalefactor);
                     center = pf.getVportLeft() + (parseInt(words[2]) * pf.scalefactor);
-                    leading = pf.getVportTop() + (parseInt(words[3]) * pf.scalefactor);
+                    leading = ((pf.getVportBottom() - (pf.getVportTop() + header)) / 10);
                     break;
 
                 case "m":
@@ -247,7 +247,7 @@ public class Winner {
                     sprite.fruitLoop(canvas, value.color, center, top);
                 value.setFruit((center - (sprite.fruitloops[0].getWidth()) / 2), top, center + (sprite.fruitloops[0].getWidth() / 2), top + sprite.fruitloops[0].getHeight());
                 sprite.numbieLine(canvas, value.score, center + sprite.fruitloops[0].getWidth(), top);
-                top += (sprite.alphieHeight() + (leading / 2) + 1);
+                top += leading;
             }
         }
     }
