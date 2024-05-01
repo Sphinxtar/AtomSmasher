@@ -153,9 +153,9 @@ public class Npc {
                                     b.setRection(Dragon.getRandom(6, 9));
                                 if (b.getState() == 0) {
                                     b.setState(1);
-                                    b.setRespawn(1200 - (300 * player.getLevel()));
+                                    b.setRespawn(2000 - (500 * player.getLevel()));
                                     player.setSpin(true);
-                                    // racket.playBounce();
+                                    racket.play(5);
                                 }
                             default:
                                 break;
