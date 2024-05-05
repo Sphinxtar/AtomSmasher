@@ -148,6 +148,10 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                     p.setStrokeWidth(4);
                     npc.connectOrange(canvas, p);
                     for (Npc.Bot b : npc.bots) {
+                        if (b.halo > 0) {
+                            pix.drawCenterSprite(canvas, 45, b.spot.x, b.spot.y);
+                            b.halo--;
+                        }
                         pix.drawCenterSprite(canvas, b.sprite, b.spot.x, b.spot.y);
                     }
                 }

@@ -17,7 +17,7 @@ import static android.graphics.BitmapFactory.decodeResource;
 import androidx.annotation.NonNull;
 
 public class Sprite {
-    private final Bitmap[] sprites = new Bitmap[45]; // array of sprites cut and scaled
+    private final Bitmap[] sprites = new Bitmap[46]; // array of sprites cut and scaled
     public final Alphie[] alphie = new Alphie[26]; // the alphabet
     public final Bitmap[] numbie = new Bitmap[11];
     public final Bitmap[] fruitloops = new Bitmap[8];

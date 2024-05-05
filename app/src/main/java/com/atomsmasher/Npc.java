@@ -101,6 +101,7 @@ public class Npc {
                 if (b.respawn == 0) {
                     b.respawn = -1;
                     b.setState(0);
+                    b.setHalo(9);
                     racket.play(6);
                 }
                 for (int i=0; i < 3; i++) { // player collision
@@ -303,7 +304,13 @@ public class Npc {
         int tts; // time til spin - at 0 reset to a random amount and changes direction/speed
         int respawn;
         int sprite;
-
+        int halo;
+        public int getHalo() {
+            return this.halo;
+        }
+        public void setHalo(int halo) {
+            this.halo = halo;
+        }
 //        public int getRespawn() { return respawn; }
         public void setRespawn(int respawn) { this.respawn = respawn; }
 //        public int getSpeed() { return speed; }
