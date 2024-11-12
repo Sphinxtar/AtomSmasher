@@ -148,11 +148,11 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                     p.setStrokeWidth(4);
                     npc.connectOrange(canvas, p);
                     for (Npc.Bot b : npc.bots) {
+                        pix.drawCenterSprite(canvas, b.sprite, b.spot.x, b.spot.y);
                         if (b.halo > 0) {
                             pix.drawCenterSprite(canvas, 45, b.spot.x, b.spot.y);
                             b.halo--;
                         }
-                        pix.drawCenterSprite(canvas, b.sprite, b.spot.x, b.spot.y);
                     }
                 }
                 if (ffe) {
@@ -220,7 +220,7 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                 winner.setWintime(startTime);
                 racket.play(3);
                 ffe = true;
-                counter = 90;
+                counter = 54;
             }
             if ((winner.getWintime() > 0) && (purple < npc.bots.length)) { // clock running and somebody turned orange
                 winner.setScore(startTime);
@@ -229,7 +229,7 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                     ffe = true;
                     winner.setWintime(0); // reset clock
                 }
-                counter = 18;
+                counter = 9;
             }
             if (counter > 0)
                 counter--;

@@ -305,19 +305,13 @@ public class Npc {
         int respawn;
         int sprite;
         int halo;
-        public int getHalo() {
-            return this.halo;
-        }
-        public void setHalo(int halo) {
-            this.halo = halo;
-        }
+        public void setHalo(int halo) { this.halo = halo; }
 //        public int getRespawn() { return respawn; }
         public void setRespawn(int respawn) { this.respawn = respawn; }
 //        public int getSpeed() { return speed; }
         public void setSpeed(int speed) { this.speed = speed; }
 //        public int getTts() { return tts; }
         public void setTts(int tts) { this.tts = tts; }
-//        public int getBirthsound() { return birthsound; }
         public void setSprite(int sprite) { this.sprite = sprite; }
         public int getRection() { return rection; }
         public void setRection(int rection) { this.rection = rection; }
@@ -325,9 +319,7 @@ public class Npc {
 //        public int getType() { return this.type; }
         public void setState(int state) { this.state = state; }
         public int getState() { return state; }
-        public void setSpot(int x, int y){
-            this.spot.x = x; this.spot.y = y;
-        }
+        public void setSpot(int x, int y){ this.spot.x = x; this.spot.y = y; }
         public Point getSpot() { return this.spot; }
     }
 }

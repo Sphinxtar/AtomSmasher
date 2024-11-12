@@ -437,14 +437,14 @@ public class Winner {
         flip = !flip;
         p.setStrokeWidth(4);
         if (flip)
-            p.setColor(Color.WHITE);
+            p.setColor(Color.LTGRAY);
         else
             p.setColor(other);
         canvas.drawLines(star, 0, 228, p);
         if (flip)
             p.setColor(other);
         else
-            p.setColor(Color.WHITE);
+            p.setColor(Color.LTGRAY);
         canvas.drawLines(star, 228, 228, p);
     }
 
