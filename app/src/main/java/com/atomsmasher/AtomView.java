@@ -138,7 +138,7 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
             if (gstate == 0) { // PLAY THE GAME
                 p.setColor(Color.LTGRAY);
                 p.setStyle(Paint.Style.STROKE);
-                p.setStrokeWidth(6);
+                p.setStrokeWidth(2);
                 canvas.drawRect(pf.getVportLeft(), pf.getVportTop(), pf.getVportRight(), pf.getVportBottom(), p);
                 dpad.draw(canvas);
                 canvas.save();

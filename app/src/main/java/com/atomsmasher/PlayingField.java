@@ -31,8 +31,8 @@ public class PlayingField {
     public void setScaleFactor(Canvas canvas)
     {
 //        String TAG = "PF INIT";
-        canvasWide = canvas.getWidth();
-        canvasHigh = canvas.getHeight();
+        canvasWide = canvas.getWidth() - 1;
+        canvasHigh = canvas.getHeight() - 1;
         dport.left  = 0;
         dport.top = 0;
         dport.right = canvasWide;
@@ -59,7 +59,7 @@ public class PlayingField {
 
 
     public boolean changed(Canvas canvas) {
-        return !((canvasHigh == canvas.getHeight()) && (canvasWide == canvas.getWidth()));
+        return !((canvasHigh == canvas.getHeight() -1) && (canvasWide == canvas.getWidth() - 1));
     }
 
     public Rect getVport() {
