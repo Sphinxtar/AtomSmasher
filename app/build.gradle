@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace 'com.atomsmasher'
-    compileSdk 34
+    namespace = 'com.atomsmasher'
+    compileSdk = 34
 
     defaultConfig {
         applicationId "com.atomsmasher"
-        minSdk 27
-        targetSdk 34
+        minSdk = 27
+        targetSdk = 34
         versionCode 1
         versionName "1.0"
 

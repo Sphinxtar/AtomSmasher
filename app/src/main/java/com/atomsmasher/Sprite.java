@@ -130,10 +130,6 @@ public class Sprite {
         return total;
     }
 
-    public int alphieHeight() {
-        return(alphie[0].letter.getHeight()); // A height
-    }
-
     public void alphieLine(@NonNull Canvas canvas, short[] name, int left, int top) {
         for (int i = 0; i < name.length && name[i] > 0; i++) {
             canvas.drawBitmap(alphie[name[i] - 1].letter, left, top, null);
