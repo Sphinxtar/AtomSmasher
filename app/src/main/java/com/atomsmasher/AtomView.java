@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
 import androidx.annotation.NonNull;
 
 public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
@@ -50,16 +49,27 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int newstate = 0;
+        int eventAction = event.getAction();
+        boolean retval = super.onTouchEvent(event);
         if (gstate == 0) {  // playing the game
             int button = dpad.hitButton(event);
             if (button > 0 && button < 10) { // dpad hit
+                switch (eventAction) {
+                    case MotionEvent.ACTION_UP:
+                        button = 5;
+                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_MOVE:
+                           retval = true;
+                        break;
+                    default:
+                        break;
+                }
                 player.setDirection(button);
                 if (button == 5)
                     player.setSpeed(player.getSpeed() - 2); // deceleration
                 else
                     player.setSpeed(8 * pf.getScaleFactor());
-            }
-            else if (button == 10) {  // BLUE
+            } else if (button == 10) {  // BLUE
                 player.setLevel(0);
                 player.setSprite(0);
                 player.resetSpot();
@@ -94,7 +104,7 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
             newstate = winner.hitButton(getContext(), player.getLevel(), event, racket);
             performClick();
             if (newstate == 3) {
-                youwon = false;
+                youwon = true;
                 player.setLevel(-1);
                 npc.resetBots(player.getLevel(), racket);
                 player.setSprite(22);
@@ -111,12 +121,12 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
         }
         if (gstate < 0 ) {
             racket.play(0);
-            thread.setRunning(false);
+            thread.setRunning(true);
             System.exit(0);
         } else {
             gstate = newstate;
         }
-        return super.onTouchEvent(event);
+        return retval;
     }
 
     @Override
