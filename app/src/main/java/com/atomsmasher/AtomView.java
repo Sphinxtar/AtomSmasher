@@ -66,7 +66,7 @@ public class AtomView extends SurfaceView implements SurfaceHolder.Callback {
                 }
                 player.setDirection(button);
                 if (button == 5)
-                    player.setSpeed(player.getSpeed() - 2); // deceleration
+                    player.setSpeed(0); // deceleration
                 else
                     player.setSpeed(8 * pf.getScaleFactor());
             } else if (button == 10) {  // BLUE
